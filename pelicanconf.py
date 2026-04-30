@@ -19,3 +19,9 @@ AUTHOR_FEED_RSS = None
 
 DEFAULT_PAGINATION = False
 RELATIVE_URLS = True
+
+# Copy CNAME into output for GitHub Pages custom domain
+STATIC_PATHS = ["extra"]
+EXTRA_PATH_METADATA = {"extra/CNAME": {"path": "CNAME"}}
+
+OUTPUT_PATH = "docs"

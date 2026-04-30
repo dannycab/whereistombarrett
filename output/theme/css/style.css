@@ -283,6 +283,16 @@ table td {
   line-height: 1.4;
 }
 
+.stat-label a {
+  color: var(--dim);
+  font-size: 0.72rem;
+}
+
+.stat-label a:hover {
+  color: var(--green);
+  text-shadow: none;
+}
+
 /* ── contact ── */
 .contact {
   margin: 1rem 0;
