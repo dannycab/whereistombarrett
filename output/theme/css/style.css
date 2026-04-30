@@ -1,0 +1,399 @@
+/* ── reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── palette ── */
+:root {
+  --black:   #0a0a0a;
+  --green:   #00ff41;
+  --text:    #c8ffd4;   /* softer green for body text — readable on black */
+  --dim:     #00882a;
+  --red:     #ff2200;
+  --yellow:  #ffe600;
+  --white:   #e8e8e8;
+  --border:  #1a3a1a;
+}
+
+/* ── base ── */
+html { font-size: 16px; }
+
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1rem;
+  line-height: 1.7;
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* ── crt scanline overlay ── */
+.scanlines {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.15) 3px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+}
+
+/* ── layout ── */
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* ── header ── */
+header {
+  margin-bottom: 3rem;
+  text-align: center;
+  border-bottom: 2px solid var(--dim);
+  padding-bottom: 2rem;
+}
+
+/* ── glitch title ── */
+.glitch-title {
+  display: inline-block;
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+  position: relative;
+  text-shadow: 0 0 12px rgba(0, 255, 65, 0.5);
+  margin-bottom: 1.5rem;
+}
+
+.glitch-title::before,
+.glitch-title::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.glitch-title::before {
+  color: var(--red);
+  animation: glitch-top 9s infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 38%, 0 38%);
+}
+
+.glitch-title::after {
+  color: cyan;
+  animation: glitch-bottom 9s infinite;
+  clip-path: polygon(0 62%, 100% 62%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-top {
+  0%, 88%, 100% { transform: none; opacity: 0; }
+  89%  { transform: translate(-5px, -2px); opacity: 0.9; }
+  91%  { transform: translate(5px,  1px); opacity: 0.9; }
+  93%  { transform: none; opacity: 0; }
+}
+
+@keyframes glitch-bottom {
+  0%, 90%, 100% { transform: none; opacity: 0; }
+  91%  { transform: translate(5px,  2px); opacity: 0.9; }
+  93%  { transform: translate(-5px, -1px); opacity: 0.9; }
+  95%  { transform: none; opacity: 0; }
+}
+
+.deco {
+  font-size: 0.68rem;
+  color: var(--dim);
+  letter-spacing: 0.12em;
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.subhead {
+  font-size: 0.85rem;
+  color: var(--dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.datestamp {
+  font-size: 0.75rem;
+  color: var(--dim);
+}
+
+/* ── lede ── */
+.lede {
+  border-left: 4px solid var(--red);
+  padding: 1rem 1.5rem;
+  margin-bottom: 2.5rem;
+  background: rgba(255, 34, 0, 0.05);
+  font-size: 1.05rem;
+}
+
+/* ── section blocks ── */
+.block {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.block:last-of-type {
+  border-bottom: none;
+}
+
+h2 {
+  font-size: 1.05rem;
+  color: var(--yellow);
+  letter-spacing: 0.1em;
+  margin-bottom: 1.2rem;
+  text-shadow: 0 0 8px rgba(255, 230, 0, 0.4);
+}
+
+/* ── lists ── */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  padding: 0.5rem 0 0.5rem 1.8rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  font-size: 0.95rem;
+}
+
+ul li:last-child {
+  border-bottom: none;
+}
+
+ul li::before {
+  content: '//';
+  position: absolute;
+  left: 0;
+  color: var(--dim);
+}
+
+/* ── rap sheet table ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.93rem;
+}
+
+table tr {
+  border-bottom: 1px solid var(--border);
+}
+
+table tr:last-child {
+  border-bottom: none;
+}
+
+table tr:hover {
+  background: rgba(0, 255, 65, 0.03);
+}
+
+table td {
+  padding: 0.9rem 0.6rem;
+  vertical-align: top;
+}
+
+.charge {
+  color: var(--red);
+  font-weight: bold;
+  white-space: nowrap;
+  padding-right: 1.5rem;
+  min-width: 140px;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+}
+
+/* ── callout boxes ── */
+.callout {
+  margin-top: 1.2rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--dim);
+  background: rgba(0, 255, 65, 0.03);
+  font-size: 0.93rem;
+  font-style: italic;
+}
+
+.callout.red-border {
+  border-color: var(--red);
+  background: rgba(255, 34, 0, 0.05);
+  color: var(--white);
+}
+
+/* ── spotlight section ── */
+.spotlight {
+  background: rgba(255, 34, 0, 0.04);
+  padding: 1.5rem;
+  border: 1px solid var(--red);
+}
+
+.big-text {
+  font-size: 3rem;
+  color: var(--yellow);
+  letter-spacing: 0.05em;
+  margin: 0.5rem 0 1rem;
+  text-shadow:
+    0 0 10px rgba(255, 230, 0, 0.5),
+    0 0 30px rgba(255, 230, 0, 0.15);
+}
+
+/* ── stats grid ── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.stat {
+  border: 1px solid var(--dim);
+  padding: 1rem;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.stat-num {
+  display: block;
+  font-size: 1.8rem;
+  color: var(--yellow);
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(255, 230, 0, 0.4);
+  margin-bottom: 0.4rem;
+}
+
+.stat-num.red {
+  color: var(--red);
+  text-shadow: 0 0 8px rgba(255, 34, 0, 0.5);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--dim);
+  display: block;
+  line-height: 1.4;
+}
+
+/* ── contact ── */
+.contact {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid var(--dim);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.contact p {
+  margin-bottom: 0.5rem;
+  font-size: 0.93rem;
+}
+
+.label {
+  color: var(--yellow);
+  font-weight: bold;
+  margin-right: 0.8rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+}
+
+a {
+  color: var(--green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--yellow);
+  text-shadow: 0 0 6px rgba(255, 230, 0, 0.4);
+}
+
+/* ── utility colors ── */
+.green  { color: var(--green); }
+.yellow { color: var(--yellow); }
+.red    { color: var(--red); }
+
+strong {
+  color: var(--white);
+}
+
+em {
+  color: var(--dim);
+  font-style: italic;
+}
+
+/* ── sources ── */
+.sources {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.sources h3 {
+  font-size: 0.72rem;
+  color: var(--dim);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.sources ul li {
+  font-size: 0.78rem;
+  color: var(--dim);
+  border: none;
+  padding: 0.15rem 0 0.15rem 1.2rem;
+}
+
+.sources ul li::before {
+  content: '–';
+}
+
+.sources a {
+  color: var(--dim);
+  font-size: 0.78rem;
+}
+
+.sources a:hover {
+  color: var(--green);
+  text-shadow: none;
+}
+
+/* ── footer ── */
+footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--border);
+  font-size: 0.75rem;
+  color: var(--dim);
+  text-align: center;
+  line-height: 1.8;
+}
+
+.blink {
+  animation: blink 1.2s step-end infinite;
+  color: var(--red);
+  font-size: 0.72rem;
+  margin-top: 0.6rem;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── responsive ── */
+@media (max-width: 600px) {
+  .glitch-title { font-size: clamp(1.5rem, 8vw, 2.5rem); }
+  .big-text { font-size: 2rem; }
+  .charge { min-width: 90px; font-size: 0.72rem; }
+  table td { padding: 0.6rem 0.4rem; }
+  table { font-size: 0.85rem; }
+  .deco { display: none; }
+}
